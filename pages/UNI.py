@@ -13,38 +13,41 @@ universidades = ['UNI']
 st.write("---")
 st.subheader("1. BUSCA TU TEMARIO")
 
+# Definir las modalidades de admisión
+modalidades = ['CEPREUNI', 'ORDINARIO', 'TRASLADO EXTERNO']
+
+# Selector para elegir modalidad
 seleccion_modalidad = st.selectbox("Selecciona la modalidad de admisión", modalidades, key="modalidad")
 
+# Mapa de modalidades a archivos PDF
 temarios = {
-    'CEPREUNI': 'static/tcepreuni.pdf',
-    'ORDINARIO': 'static/tordinario.pdf',
-    'TRASLADO EXTERNO': 'static/ttraslado.pdf'
+    'CEPREUNI': 'https://raw.githubusercontent.com/josue-org-pe/pre/01ae9457552c9516508edf67dee170b979e2bfe5/static/tcepreuni.pdf',
+    'ORDINARIO': 'https://raw.githubusercontent.com/josue-org-pe/pre/01ae9457552c9516508edf67dee170b979e2bfe5/static/tordinario.pdf',
+    'TRASLADO EXTERNO': 'https://raw.githubusercontent.com/josue-org-pe/pre/01ae9457552c9516508edf67dee170b979e2bfe5/static/ttraslado.pdf'
 }
 
-if seleccion_modalidad in temarios:
-    ruta_pdf = temarios[seleccion_modalidad]
-    try:
-        with open(ruta_pdf, "rb") as f:
-            pdf_bytes = f.read()
-            base64_pdf = base64.b64encode(pdf_bytes).decode('utf-8')
-            
-            # Mostrar PDF embebido
-            pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="600px" type="application/pdf"></iframe>'
-            st.markdown(pdf_display, unsafe_allow_html=True)
-            
-            # Botón de descarga con estilo Streamlit
-            nombre_archivo = ruta_pdf.split("/")[-1]
-            col1,col2,col3 = st.columns([8,3,8])
-            with col2:
-                st.download_button(
-                    label="📥 Descargar temario",
-                    data=pdf_bytes,
-                    file_name=nombre_archivo,
-                    mime="application/pdf"
-                )
-    except FileNotFoundError:
-        st.error("⚠️ El archivo no fue encontrado.")
 
+# Comprobar si la modalidad seleccionada tiene un archivo asociado
+if seleccion_modalidad in temarios:
+    url_pdf = temarios[seleccion_modalidad]
+    
+    # Mostrar el PDF embebido desde la URL de GitHub
+    pdf_display = f'<iframe src="{url_pdf}" width="100%" height="600px" type="application/pdf"></iframe>'
+    st.markdown(pdf_display, unsafe_allow_html=True)
+    
+    # Botón de descarga con estilo Streamlit
+    nombre_archivo = url_pdf.split("/")[-1]
+    col1, col2, col3 = st.columns([8, 3, 8])
+    with col2:
+        # Mostrar el botón de descarga
+        st.download_button(
+            label="📥 Descargar temario",
+            data=url_pdf,
+            file_name=nombre_archivo,
+            mime="application/pdf"
+        )
+else:
+    st.error("⚠️ No hay temario disponible para esta modalidad.")
 # --- SECCIÓN 2: RECOMENDADOS ---
 st.write("---")
 st.subheader("2. RECOMENDADOS")
