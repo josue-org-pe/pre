@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import streamlit.components.v1 as components
 import base64
+import os
 
 st.set_page_config(page_title="PLANETA ROJO🪐", page_icon="👽", layout="wide")
 
@@ -13,46 +14,48 @@ universidades = ['UNI']
 st.write("---")
 st.subheader("1. BUSCA TU TEMARIO")
 
-# Definir las modalidades de admisión
-modalidades = ['CEPREUNI', 'ORDINARIO', 'TRASLADO EXTERNO']
-
 # Selector para elegir modalidad
 seleccion_modalidad = st.selectbox("Selecciona la modalidad de admisión", modalidades, key="modalidad")
 
-# Mapa de modalidades a archivos PDF
+# Mapa de modalidades a rutas de archivos locales
 temarios = {
-    'CEPREUNI': 'https://raw.githubusercontent.com/josue-org-pe/pre/01ae9457552c9516508edf67dee170b979e2bfe5/static/tcepreuni.pdf',
-    'ORDINARIO': 'https://raw.githubusercontent.com/josue-org-pe/pre/01ae9457552c9516508edf67dee170b979e2bfe5/static/tordinario.pdf',
-    'TRASLADO EXTERNO': 'https://raw.githubusercontent.com/josue-org-pe/pre/01ae9457552c9516508edf67dee170b979e2bfe5/static/ttraslado.pdf'
+    'CEPREUNI': 'static/tcepreuni.pdf',
+    'ORDINARIO': 'static/tordinario.pdf',
+    'TRASLADO EXTERNO': 'static/ttraslado.pdf'
 }
-
 
 # Comprobar si la modalidad seleccionada tiene un archivo asociado
 if seleccion_modalidad in temarios:
-    url_pdf = temarios[seleccion_modalidad]
-    
-    # Mostrar el PDF embebido desde la URL de GitHub
-    pdf_display = f'<iframe src="{url_pdf}" width="100%" height="600px" type="application/pdf"></iframe>'
-    st.markdown(pdf_display, unsafe_allow_html=True)
-    
-    # Botón de descarga con estilo Streamlit
-    nombre_archivo = url_pdf.split("/")[-1]
-    col1, col2, col3 = st.columns([8, 3, 8])
-    with col2:
-        # Mostrar el botón de descarga
-        st.download_button(
-            label="📥 Descargar temario",
-            data=url_pdf,
-            file_name=nombre_archivo,
-            mime="application/pdf"
-        )
+    ruta_pdf = temarios[seleccion_modalidad]
+
+    try:
+        with open(ruta_pdf, "rb") as f:
+            pdf_bytes = f.read()
+            b64_pdf = base64.b64encode(pdf_bytes).decode("utf-8")
+
+            # Mostrar el PDF embebido usando base64
+            pdf_display = f'<iframe src="data:application/pdf;base64,{b64_pdf}" width="100%" height="600px" type="application/pdf"></iframe>'
+            st.markdown(pdf_display, unsafe_allow_html=True)
+
+            # Botón de descarga
+            nombre_archivo = os.path.basename(ruta_pdf)
+            col1, col2, col3 = st.columns([8, 3, 8])
+            with col2:
+                st.download_button(
+                    label="📥 Descargar temario",
+                    data=pdf_bytes,
+                    file_name=nombre_archivo,
+                    mime="application/pdf"
+                )
+    except FileNotFoundError:
+        st.error("⚠️ El archivo PDF no se encontró en el directorio `static/`.")
 else:
     st.error("⚠️ No hay temario disponible para esta modalidad.")
+
 # --- SECCIÓN 2: RECOMENDADOS ---
 st.write("---")
 st.subheader("2. RECOMENDADOS")
 
-# Diccionario corregido
 canales_recomendados = {
     "MATEMÁTICAS": {
         "imagen": "https://th.bing.com/th/id/OIP.LROh6BJXWrFcFDMO4xz8eAHaHa?rs=1&pid=ImgDetMain",
@@ -63,7 +66,7 @@ canales_recomendados = {
         "link": "https://www.youtube.com/watch?v=iA_xphwDTNU&list=PLBl30C3P8uOWILiH-wm0HWpfHgm2uTWe1&ab_channel=MichiCiclero"
     },
     "FÍSICA": {
-        "imagen": "https://yt3.googleusercontent.com/WrmKQSLQFoktaQPkZJbEwOhQ2bXUiLrVOy4Aa64J2NWFYUaDeLAWE_CLMdeykC6AVTFgkyr0rw=s160-c-k-c0x00ffffff-no-rj",
+        "imagen": "https://yt3.googleusercontent.com/WrmKQSLQFoktaQPkZbEwOhQ2bXUiLrVOy4Aa64J2NWFYUaDeLAWE_CLMdeykC6AVTFgkyr0rw=s160-c-k-c0x00ffffff-no-rj",
         "link": "https://www.youtube.com/c/F%C3%ADsicaPRE"
     },
     "Ciclo-Cepreuni": {
@@ -71,7 +74,6 @@ canales_recomendados = {
         "link": "https://www.youtube.com/@bastet1490"
     }
 }
-    
 
 # Estilo para imagen circular
 css_circle = """
@@ -94,16 +96,12 @@ st.markdown(css_circle, unsafe_allow_html=True)
 cols = st.columns(3)
 for col, (nombre, data) in zip(cols, canales_recomendados.items()):
     with col:
-        # Imagen dentro del enlace
         st.markdown(
             f'<a href="{data["link"]}" target="_blank">'
             f'<img src="{data["imagen"]}" class="circle-img"></a>',
             unsafe_allow_html=True
         )
-        # Título opcional
         st.markdown(f"**{nombre}**")
-
-
 
 # --- SECCIÓN 3: CARRERAS ---
 st.write("---")
