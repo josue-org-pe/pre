@@ -5,3 +5,4 @@ pymupdf
 transformers
 torch
 openai
+base64
