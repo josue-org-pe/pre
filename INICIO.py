@@ -75,4 +75,4 @@ logo_github = '<a href="{0}"><img src="https://img.icons8.com/fluent/48/000000/g
 
 col1.markdown(logo_youtube, unsafe_allow_html=True)
 col2.markdown(logo_whatsapp, unsafe_allow_html=True)
-col3.markdown(logo_github, unsafe_allow_html=True)
+col3.markdown(logo_github, unsafe_allow_html= True)
