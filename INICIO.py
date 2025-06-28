@@ -45,7 +45,7 @@ facultades_unmsm = ["FM", "FFB", "FO", "FP", "FCS", "FDCP", "FCA", "FCC", "FCE",
 facultades_unap = ["FCA", "FMVZ", "FIE", "FCCA", "FE", "FTS", "FCS", "FIM", "FCJP", "FIQ", "FCB", "FCE", "FIGMM", "FEEI", "FIC", "FIA", "FCSAL", "FIMHEES", "FMH", "FCAH"]
 
 with st.container():
-    st.header("¡Hola causa 👽!")
+    st.header("¡Hola !")
     st.title("Te brindamos lo que necesitas para tu próxima admisión...")
     st.write("---")
 #TUTORIA
