@@ -1,4 +1,10 @@
 import streamlit as st
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn=st.secrets["sentry"]["dsn"]
+)
+
 st.set_page_config(page_title="PLANETA ROJO🪐", page_icon="👽", layout="wide")
 #definicion de VARIABLES 
 universidades = ['UNI', 'UNMSM', 'UNAP']
