@@ -8,8 +8,12 @@ sentry_sdk.init(
 st.set_page_config(page_title="PLANETA ROJO🪐", page_icon="👽", layout="wide")
 #definicion de VARIABLES 
 
-if st.button("Provocar error mínimo"):
-    raise ValueError("Este es un error de prueba para Sentry")
+if st.button("🔴 Lanzar error manual"):
+    try:
+        1 / 0
+    except Exception as e:
+        st.error("Error capturado manualmente")
+        sentry_sdk.capture_exception(e)
 
 universidades = ['UNI', 'UNMSM', 'UNAP']
 
