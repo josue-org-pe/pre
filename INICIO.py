@@ -15,7 +15,7 @@ if st.button("🔴 Lanzar error manual"):
         st.error("Error capturado manualmente")
         sentry_sdk.capture_exception(e)
 
-universidades = ['UNI', 'UNMSM', 'UNAP']
+#universidades = ['UNI', 'UNMSM', 'UNAP']
 
 facultades_uni = ['FIIS','FC','FAUA', 'FIC', 'FIEECS', 'FIGMM','FIEE','FIM','FIQT','FIP','FIA']
 facultades_unmsm = ["FM", "FFB", "FO", "FP", "FCS", "FDCP", "FCA", "FCC", "FCE", "FLCH", "FE", "FQIQ", "FCF", "FCB", "FCM", "FIGMMG", "FII", "FIEE", "FISI", "FMV"]
