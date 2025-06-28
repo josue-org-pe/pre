@@ -7,7 +7,9 @@ sentry_sdk.init(
 
 st.set_page_config(page_title="PLANETA ROJO🪐", page_icon="👽", layout="wide")
 #definicion de VARIABLES 
-universidades = ['UNI', 'UNMSM', 'UNAP']
+
+#universidades = ['UNI', 'UNMSM', 'UNAP']
+
 facultades_uni = ['FIIS','FC','FAUA', 'FIC', 'FIEECS', 'FIGMM','FIEE','FIM','FIQT','FIP','FIA']
 facultades_unmsm = ["FM", "FFB", "FO", "FP", "FCS", "FDCP", "FCA", "FCC", "FCE", "FLCH", "FE", "FQIQ", "FCF", "FCB", "FCM", "FIGMMG", "FII", "FIEE", "FISI", "FMV"]
 facultades_unap = ["FCA", "FMVZ", "FIE", "FCCA", "FE", "FTS", "FCS", "FIM", "FCJP", "FIQ", "FCB", "FCE", "FIGMM", "FEEI", "FIC", "FIA", "FCSAL", "FIMHEES", "FMH", "FCAH"]
