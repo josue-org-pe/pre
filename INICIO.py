@@ -8,36 +8,7 @@ sentry_sdk.init(
 st.set_page_config(page_title="PLANETA ROJO🪐", page_icon="👽", layout="wide")
 #definicion de VARIABLES 
 
-def lanzar_errores():
-    if st.button(" Error 1: división por cero"):
-        try:
-            1 / 0
-        except Exception as e:
-            sentry_sdk.capture_exception(e)
-            st.error("Error 1 lanzado: división por cero")
 
-    if st.button(" Error 2: acceso a índice fuera de rango"):
-        try:
-            lista = [1, 2, 3]
-            x = lista[5]
-        except Exception as e:
-            sentry_sdk.capture_exception(e)
-            st.error("Error 2 lanzado: índice fuera de rango")
-
-    if st.button(" Error 3: variable no definida"):
-        try:
-            print(valor_no_definido)
-        except Exception as e:
-            sentry_sdk.capture_exception(e)
-            st.error("Error 3 lanzado: variable no definida")
-
-    if st.button(" Error 4: error personalizado"):
-        try:
-            raise RuntimeError("🧪 Error personalizado lanzado manualmente")
-        except Exception as e:
-            sentry_sdk.capture_exception(e)
-            st.error("Error 4 lanzado: RuntimeError personalizado")
-lanzar_errores()
 universidades = ['UNI', 'UNMSM', 'UNAP']
 
 facultades_uni = ['FIIS','FC','FAUA', 'FIC', 'FIEECS', 'FIGMM','FIEE','FIM','FIQT','FIP','FIA']
