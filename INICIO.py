@@ -74,7 +74,7 @@ st.write("---")
 st.subheader("CONTACTO")
 col1, col2, col3 = st.columns([1,1,1])
 
-enlace_youtube = "https://www.youtube.com/channel/UCee5pfQ3b43EZUYHTm7U8HQ"
+enlace_youtube = "https://www.youtube.com/channel/UCee5pfQ3b43EZUYHTm7U8HQd"
 enlace_whatsapp = "https://wa.link/fgu2s7"
 enlace_github = "https://github.com/josue-org-pe"
 
